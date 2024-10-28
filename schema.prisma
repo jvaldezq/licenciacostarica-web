@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Location {
+  id          BigInt   @id @default(autoincrement())
+  name        String   @unique
+  status      Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  assets      Asset[]
+  events      Event[]
+  instructors User[]
+}
+
+model LicenseType {
+  id                 BigInt               @id @default(autoincrement())
+  name               String               @unique
+  color              String               @unique
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  events             Event[]
+  assets             Asset[]
+}
+
+model Asset {
+  id                 BigInt              @id @default(autoincrement())
+  name               String              @unique
+  plate              String              @unique
+  status             Boolean
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  locationId         BigInt
+  location           Location            @relation(fields: [locationId], references: [id])
+  events             Event[]
+  licenseTypeId      BigInt
+  licenseType        LicenseType            @relation(fields: [licenseTypeId], references: [id])
+  schedule           Schedule[]
+}
+
+model User {
+  id                 BigInt      @id @default(autoincrement())
+  authId             String      @unique
+  name               String
+  locationId         BigInt
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  eventsAsCreator    Event[]     @relation("CreatorRelation")
+  eventsAsInstructor Event[]     @relation("InstructorRelation")
+  logs               Log[]
+  location           Location?    @relation(fields: [locationId], references: [id])
+  access             UserAccess?
+  schedule           Schedule[]
+}
+
+model UserAccess {
+  id           BigInt   @id @default(autoincrement())
+  admin        Boolean  @default(false)
+  instructor   Boolean  @default(false)
+  receptionist Boolean  @default(false)
+  userId       BigInt   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id            BigInt       @id @default(autoincrement())
+  status        String
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  assetId       BigInt?
+  asset         Asset?       @relation(fields: [assetId], references: [id])
+  createdById   BigInt
+  createdBy     User         @relation("CreatorRelation", fields: [createdById], references: [id])
+  customerId    BigInt
+  customer      Customer    @relation(fields: [customerId], references: [id])
+  instructorId  BigInt?
+  instructor    User?        @relation("InstructorRelation", fields: [instructorId], references: [id])
+  licenseTypeId BigInt
+  licenseType   LicenseType @relation(fields: [licenseTypeId], references: [id])
+  locationId    BigInt
+  location      Location     @relation(fields: [locationId], references: [id])
+  paymentId     BigInt       @unique
+  payment       Payment      @relation(fields: [paymentId], references: [id])
+  date          DateTime?
+  time          String?
+  typeId        BigInt
+  type          EventType    @relation(fields: [typeId], references: [id])
+
+  @@index([instructorId, createdById, date, paymentId, customerId, locationId, licenseTypeId])
+}
+
+model Customer {
+  id             BigInt   @id @default(autoincrement())
+  name           String
+  identification String
+  phone          String
+  testPassed     Boolean? @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  event          Event[]
+  scheduleId     BigInt? @unique
+  schedule       Schedule?    @relation(fields: [scheduleId], references: [id])
+}
+
+model Schedule {
+  id                  BigInt   @id @default(autoincrement())
+  startTime           String?
+  endTime             String?
+  startDate           DateTime?
+  endDate             DateTime?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  assetId             BigInt?
+  asset               Asset?       @relation(fields: [assetId], references: [id])
+  userId              BigInt?
+  user                User?     @relation(fields: [userId], references: [id])
+  customer            Customer?
+}
+
+model Payment {
+  id          BigInt    @id @default(autoincrement())
+  price       Float?
+  cashAdvance Float?
+  paid        Boolean?  @default(false)
+  paidDate    DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  event       Event?
+}
+
+model EventType {
+  id        BigInt   @id @default(autoincrement())
+  name      String   @unique
+  color     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Event[]
+}
+
+model Log {
+  id          BigInt   @id @default(autoincrement())
+  modelName   String
+  modelId     BigInt
+  action      String
+  changes     String
+  createdAt   DateTime @default(now())
+  changedById BigInt
+  changedBy   User     @relation(fields: [changedById], references: [id])
+}
