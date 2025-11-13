@@ -44,22 +44,15 @@ export const LicenseSection = ({ licenseClass }: LicenseSectionProps) => {
     <section ref={sectionRef} className="license-class-section space-y-16 py-12">
       {/* Class Header */}
       <div ref={headerRef} className="flex flex-wrap items-start justify-between gap-6 px-6 py-4 border-b-4 border-secondary">
-        <div className="flex items-start gap-4">
-          <span className="text-6xl md:text-7xl lg:text-8xl font-black text-secondary" aria-hidden="true">
-            {licenseClass.className}
-          </span>
+        <div className="flex items-center gap-4">
           <div>
             <h2 className="text-3xl md:text-4xl font-black text-primary uppercase">
               {licenseClass.subtitle}
             </h2>
-            {licenseClass.features && licenseClass.features.length > 0 && (
-              <ul className="text-gray-600 list-disc list-inside mt-3 space-y-1 text-base md:text-lg">
-                {licenseClass.features.map((feature, index) => (
-                  <li key={index}>{feature}</li>
-                ))}
-              </ul>
-            )}
           </div>
+          <span className="text-6xl md:text-7xl lg:text-8xl font-black text-secondary" aria-hidden="true">
+            {licenseClass.className}
+          </span>
         </div>
       </div>
 
