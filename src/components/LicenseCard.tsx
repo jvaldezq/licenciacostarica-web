@@ -11,7 +11,7 @@ export const LicenseCard = ({ license }: LicenseCardProps) => {
       <div className="relative w-full aspect-[4/3]">
         <Image
           src="/assets/i10-left-removebg-preview.png"
-          alt={`Costa Rican ${license.name} license vehicle`}
+          alt={`Costa Rican ${license.id} license vehicle`}
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -19,7 +19,7 @@ export const LicenseCard = ({ license }: LicenseCardProps) => {
       </div>
       <div className="mt-auto pt-4 flex flex-col items-center">
         <div className="px-4 pb-4">
-          <p className="text-xl font-semibold text-primary mb-2">{license.name}</p>
+          <p className="text-xl font-semibold text-primary mb-2">{license.id}</p>
           <p className="text-sm text-gray-600 leading-relaxed">{license.description}</p>
           {license.requirements && (
             <div className="mt-3 pt-3 border-t border-gray-200">
@@ -30,7 +30,7 @@ export const LicenseCard = ({ license }: LicenseCardProps) => {
           )}
         </div>
         <div className="bg-secondary text-white py-2 px-6 w-full">
-          <p className="text-lg font-bold">{license.name}</p>
+          <p className="text-lg font-bold">{license.id}</p>
         </div>
       </div>
     </article>
