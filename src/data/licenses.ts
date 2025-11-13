@@ -3,6 +3,7 @@ export interface Vehicle {
   name: string;
   image: string;
   description?: string;
+  videoSrc?: string;
 }
 
 export interface LicenseType {
@@ -36,7 +37,7 @@ export const licenseClasses: LicenseClass[] = [
         title: 'HASTA 125CC',
         description: 'Bicimotos y motocicletas hasta 125cc; triciclos y cuadraciclos hasta 250cc',
         vehicles: [
-          { id: 'a1-v1', name: 'Honda Navi 120cc', image: '/assets/a1-1.webp' },
+          { id: 'a1-v1', name: 'Honda Navi 110cc', image: '/assets/a1-1.webp' },
         ],
       },
       {
@@ -46,8 +47,8 @@ export const licenseClasses: LicenseClass[] = [
         description: 'Bicimotos y motocicletas desde 126cc hasta 500cc; triciclos y cuadraciclos desde 251cc hasta 500cc',
         vehicles: [
           { id: 'a2-v1', name: 'Scooter 150cc', image: '/assets/a2-1.webp' },
-          { id: 'a2-v2', name: 'Nova Automática 150cc', image: '/assets/a2-2.webp' },
-          { id: 'a2-v3', name: 'ZS Cambios 500cc', image: '/assets/a2-3.webp' },
+          { id: 'a2-v2', name: 'Nova Automática 150cc', image: '/assets/a2-2.webp', videoSrc: '/assets/videos/a2-2.MOV' },
+          { id: 'a2-v3', name: 'ZS Cambios 150cc', image: '/assets/a2-3.webp' },
         ],
       },
       {
@@ -56,8 +57,10 @@ export const licenseClasses: LicenseClass[] = [
         title: 'DE 501CC EN ADELANTE',
         description: 'Bicimotos, motocicletas, triciclos y cuadraciclos desde 501cc en adelante',
         vehicles: [
-          { id: 'a3-v1', name: 'Honda TRX Automático 520cc', image: '/assets/a3-1.webp' },
+          { id: 'a3-v1', name: 'Honda TRX Automático 520cc', image: '/assets/a3-1.webp', videoSrc: '/assets/videos/a3-1.MOV' },
           { id: 'a3-v2', name: 'Honda XR 650cc', image: '/assets/a3-2.webp' },
+          { id: 'a3-v3', name: 'X-ADV Automático 750cc', image: '/assets/a3-3.webp', videoSrc: '/assets/videos/a3-3.MOV' },
+          { id: 'a3-v4', name: 'MBW GS 650cc', image: '/assets/a3-4.webp' },
         ],
       },
     ],
@@ -74,7 +77,7 @@ export const licenseClasses: LicenseClass[] = [
         title: 'Hasta 4,000kg',
         description: '',
         vehicles: [
-          { id: 'b1-v1', name: 'Yaris Hashback Automático', image: '/assets/b1-1.webp' },
+          { id: 'b1-v1', name: 'Yaris Hatchback Automático', image: '/assets/b1-1.webp' },
           { id: 'b1-v2', name: 'Hyundai i10 Automático', image: '/assets/b1-2.webp' },
         ],
       },
@@ -112,11 +115,6 @@ export const licenseClasses: LicenseClass[] = [
     className: 'C',
     title: 'Transporte Público de Personas',
     subtitle: 'LICENCIA TIPO',
-    features: [
-      'Alquiler de bus o taxi',
-      'Práctica en pista y en ruta real',
-      'Evaluación de ruta específica'
-    ],
     types: [
       {
         id: 'c-2-microbus',
@@ -146,7 +144,7 @@ export const licenseClasses: LicenseClass[] = [
         title: 'BUS',
         description: 'De 45 pasajeros en adelante',
         vehicles: [
-          // { id: 'c2-v1', name: 'Mercedes-Benz Autobús', image: '/assets/i10-left-removebg-preview.png' },
+          { id: 'c2-v1', name: 'Bus', image: '/assets/c2-bus.webp', videoSrc: '/assets/videos/c2-bus.MOV'  },
           // { id: 'c2-v2', name: 'Volvo 9700', image: '/assets/i10-left-removebg-preview.png' },
           // { id: 'c2-v3', name: 'Hino AK8J', image: '/assets/i10-left-removebg-preview.png' },
         ],
