@@ -2,15 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
+import { useVideoModal } from '@/contexts/VideoModalContext';
 
-interface VehicleVideoModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  videoSrc: string;
-  vehicleName: string;
-}
-
-export const VehicleVideoModal = ({ isOpen, onClose, videoSrc, vehicleName }: VehicleVideoModalProps) => {
+export const RootVideoModal = () => {
+  const { isOpen, videoSrc, vehicleName, closeVideo } = useVideoModal();
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -22,7 +17,7 @@ export const VehicleVideoModal = ({ isOpen, onClose, videoSrc, vehicleName }: Ve
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onClose();
+        closeVideo();
       }
     };
 
@@ -35,19 +30,23 @@ export const VehicleVideoModal = ({ isOpen, onClose, videoSrc, vehicleName }: Ve
       document.removeEventListener('keydown', handleEscape);
       document.body.style.overflow = 'unset';
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, closeVideo]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !videoSrc) return null;
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/80"
-      onClick={onClose}
+      className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-4"
+      onClick={closeVideo}
       style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1rem',
       }}
     >
       <div
@@ -55,15 +54,13 @@ export const VehicleVideoModal = ({ isOpen, onClose, videoSrc, vehicleName }: Ve
         onClick={(e) => e.stopPropagation()}
         style={{
           maxHeight: '90vh',
-          margin: 'auto',
-          position: 'relative',
         }}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <h3 className="text-lg font-semibold text-gray-900">{vehicleName}</h3>
           <button
-            onClick={onClose}
+            onClick={closeVideo}
             className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
             aria-label="Close video"
           >

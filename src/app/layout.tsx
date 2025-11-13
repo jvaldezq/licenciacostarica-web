@@ -1,6 +1,8 @@
 import type {Metadata, Viewport} from "next";
 import "@/styles/globals.css";
 import {QueryWrapper} from "@/components/QueryWrapper";
+import {VideoModalProvider} from "@/contexts/VideoModalContext";
+import {RootVideoModal} from "@/components/RootVideoModal";
 
 export const metadata: Metadata = {
     title: "Licencia Costa Rica - Escuela de Manejo | Clases A, B y C",
@@ -99,7 +101,10 @@ const RootLayout = ({
         className="h-dvh bg-white"
     >
     <QueryWrapper>
-        {children}
+        <VideoModalProvider>
+            {children}
+            <RootVideoModal />
+        </VideoModalProvider>
     </QueryWrapper>
     </body>
     </html>);

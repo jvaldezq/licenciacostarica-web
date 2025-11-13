@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Calendar, Video } from 'lucide-react';
 import { Vehicle } from '@/data/licenses';
 import { ReservationModal } from './ReservationModal';
-import { VehicleVideoModal } from './VehicleVideoModal';
+import { useVideoModal } from '@/contexts/VideoModalContext';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -15,15 +15,17 @@ interface VehicleCardProps {
 
 export const VehicleCard = ({ vehicle, index, licenseType }: VehicleCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const { openVideo } = useVideoModal();
 
   const handleVideoClick = () => {
     // On mobile, use native video player by opening video directly
     if (window.innerWidth < 768 && vehicle.videoSrc) {
       window.open(vehicle.videoSrc, '_blank');
     } else {
-      // On desktop, use modal
-      setIsVideoModalOpen(true);
+      // On desktop, use modal at root level
+      if (vehicle.videoSrc) {
+        openVideo(vehicle.videoSrc, vehicle.name);
+      }
     }
   };
 
@@ -74,16 +76,6 @@ export const VehicleCard = ({ vehicle, index, licenseType }: VehicleCardProps) =
         vehicleName={vehicle.name}
         licenseType={licenseType}
       />
-
-      {/* Video Modal - Only rendered if vehicle has video */}
-      {vehicle.videoSrc && (
-        <VehicleVideoModal
-          isOpen={isVideoModalOpen}
-          onClose={() => setIsVideoModalOpen(false)}
-          videoSrc={vehicle.videoSrc}
-          vehicleName={vehicle.name}
-        />
-      )}
     </>
   );
 };
