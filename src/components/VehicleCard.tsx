@@ -18,14 +18,10 @@ export const VehicleCard = ({ vehicle, index, licenseType }: VehicleCardProps) =
   const { openVideo } = useVideoModal();
 
   const handleVideoClick = () => {
-    // On mobile, use native video player by opening video directly
-    if (window.innerWidth < 768 && vehicle.videoSrc) {
-      window.open(vehicle.videoSrc, '_blank');
-    } else {
-      // On desktop, use modal at root level
-      if (vehicle.videoSrc) {
-        openVideo(vehicle.videoSrc, vehicle.name);
-      }
+    // Always use modal - on mobile, the HTML5 video will open in native fullscreen
+    // when played, providing the native experience without page navigation
+    if (vehicle.videoSrc) {
+      openVideo(vehicle.videoSrc, vehicle.name);
     }
   };
 

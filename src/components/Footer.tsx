@@ -76,6 +76,27 @@ export const Footer = () => {
             </a>
           </div>
         </div>
+
+         {/* Divider */}
+         <div className="h-px w-24 sm:h-16 sm:w-px bg-gray-300" aria-hidden="true" />
+
+
+        {/* Otra Sedes */}
+        <div className="text-center">
+          <p className="text-xl font-bold text-primary mb-3">Otras Sedes</p>
+          <div className="flex flex-col gap-2">
+            <a
+              href="https://wa.me/50672687202"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-start gap-2 bg-[#25D366] hover:bg-[#22c55e] text-white px-4 py-2 rounded-lg font-semibold text-base transition-colors shadow-sm hover:shadow-md"
+              aria-label="Contactar por WhatsApp - Sede San Ramón"
+            >
+              <WhatsAppIcon />
+              <span>7268-7202</span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <p className="text-gray-600 text-base font-normal leading-normal">

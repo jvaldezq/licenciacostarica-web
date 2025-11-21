@@ -1,12 +1,14 @@
-import type {Metadata, Viewport} from "next";
+import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
-import {QueryWrapper} from "@/components/QueryWrapper";
-import {VideoModalProvider} from "@/contexts/VideoModalContext";
-import {RootVideoModal} from "@/components/RootVideoModal";
+import { QueryWrapper } from "@/components/QueryWrapper";
+import { VideoModalProvider } from "@/contexts/VideoModalContext";
+import { RootVideoModal } from "@/components/RootVideoModal";
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 
 export const metadata: Metadata = {
     title: "Licencia Costa Rica - Escuela de Manejo | Clases A, B y C",
-    description: "Aprende a manejar en Costa Rica con Licencia Costa Rica. Flota moderna de vehículos, instructores certificados y preparación completa para examen oficial. Clases para motos, carros y buses. Sedes en Ciudad Vial y San Ramón.",
+    description: "Aprende a manejar en Costa Rica con Licencia Costa Rica. Flotilla moderna de vehículos, instructores certificados y preparación completa para examen oficial. Clases para motos, carros y buses.",
     keywords: [
         "licencia de conducir Costa Rica",
         "escuela de manejo",
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
         url: "https://licenciacostarica.com",
         siteName: "Licencia Costa Rica",
         title: "Licencia Costa Rica - Escuela de Manejo Profesional",
-        description: "Flota moderna de vehículos, instructores certificados y preparación completa para tu examen de conducir. Licencias tipo A, B y C. Sedes en Ciudad Vial y San Ramón.",
+        description: "Flotilla moderna de vehículos, instructores certificados y preparación completa para tu examen de conducir. Licencias tipo A, B, C, D y E.",
         images: [
             {
                 url: "/assets/logo.webp",
@@ -57,7 +59,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "Licencia Costa Rica - Escuela de Manejo",
-        description: "Aprende a manejar con los mejores. Flota moderna, instructores certificados y preparación completa para tu examen oficial.",
+        description: "Aprende a manejar con los mejores. Flotilla moderna, instructores certificados y preparación completa para tu examen oficial.",
         images: ["/assets/logo.webp"],
     },
     icons: {
@@ -92,21 +94,22 @@ export const viewport: Viewport = {
 
 
 const RootLayout = ({
-                        children,
-                    }: Readonly<{
+    children,
+}: Readonly<{
     children: React.ReactNode;
 }>) => {
     return (<html lang="en">
-    <body
-        className="h-dvh bg-white"
-    >
-    <QueryWrapper>
-        <VideoModalProvider>
-            {children}
-            <RootVideoModal />
-        </VideoModalProvider>
-    </QueryWrapper>
-    </body>
+        <body
+            className="h-dvh bg-white"
+        >
+            <QueryWrapper>
+                <VideoModalProvider>
+                    {children}
+                    <RootVideoModal />
+                </VideoModalProvider>
+            </QueryWrapper>
+            <GoogleAnalytics gaId="G-WWX2BQ3L8Ngit" />
+        </body>
     </html>);
 }
 

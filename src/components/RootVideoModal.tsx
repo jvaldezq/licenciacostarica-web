@@ -36,7 +36,7 @@ export const RootVideoModal = () => {
 
   return (
     <div
-      className="fixed inset-0 z-[9999] bg-black/80 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center md:p-4"
       onClick={closeVideo}
       style={{
         position: 'fixed',
@@ -50,14 +50,14 @@ export const RootVideoModal = () => {
       }}
     >
       <div
-        className="relative w-full max-w-4xl bg-white rounded-lg shadow-2xl overflow-hidden"
+        className="relative w-full h-full md:h-auto md:max-w-4xl bg-white md:rounded-lg shadow-2xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxHeight: '90vh',
+          maxHeight: '100vh',
         }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
           <h3 className="text-lg font-semibold text-gray-900">{vehicleName}</h3>
           <button
             onClick={closeVideo}
@@ -69,14 +69,15 @@ export const RootVideoModal = () => {
         </div>
 
         {/* Video Player */}
-        <div className="relative w-full bg-black">
+        <div className="relative w-full bg-black" style={{ height: 'calc(100vh - 73px)' }}>
           <video
             ref={videoRef}
             className="w-full h-full object-contain"
-            style={{ maxHeight: 'calc(90vh - 73px)' }}
             controls
             controlsList="nodownload"
             preload="metadata"
+            playsInline
+            webkit-playsinline="true"
           >
             <source src={videoSrc} type="video/quicktime" />
             <source src={videoSrc} type="video/mp4" />
