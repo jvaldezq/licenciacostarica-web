@@ -108,8 +108,12 @@ const RootLayout = ({
                     <RootVideoModal />
                 </VideoModalProvider>
             </QueryWrapper>
-            <GoogleAnalytics gaId="G-WWX2BQ3L8Ngit" />
         </body>
+        {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID && (
+            <GoogleAnalytics
+                gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}
+            />
+        )}
     </html>);
 }
 
