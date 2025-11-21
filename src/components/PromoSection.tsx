@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { FileText, Download, Trophy } from 'lucide-react';
+import confetti from 'canvas-confetti';
 
 export const PromoSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
+  const [hasPlayedConfetti, setHasPlayedConfetti] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -35,6 +37,38 @@ export const PromoSection = () => {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || hasPlayedConfetti) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasPlayedConfetti) {
+            // Trigger confetti with app colors
+            confetti({
+              particleCount: 50,
+              spread: 60,
+              origin: { y: 0.6 },
+              colors: ['#ca0b10', '#383836', '#ffffff'],
+              ticks: 200,
+              gravity: 1,
+              scalar: 0.8,
+            });
+            setHasPlayedConfetti(true);
+          }
+        });
+      },
+      { threshold: 1.0 }
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasPlayedConfetti]);
 
   const handleDownloadPDF = () => {
     // Open PDF in new tab for viewing
