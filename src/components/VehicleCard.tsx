@@ -27,26 +27,36 @@ export const VehicleCard = ({ vehicle, index, licenseType }: VehicleCardProps) =
 
   return (
     <>
-      <article className="vehicle-card flex flex-col overflow-hidden text-center bg-white rounded-lg shadow-sm">
+      <article className="vehicle-card flex flex-col overflow-hidden text-center bg-white rounded-lg shadow-sm group">
         <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100">
           <Image
             src={vehicle.image}
             alt={`${vehicle.name} - Costa Rican driver's license vehicle`}
             fill
-            className="object-contain"
+            className="object-contain transition-transform duration-300 group-hover:scale-105"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             unoptimized
           />
 
-          {/* Video Icon Overlay - Only shown if vehicle has video */}
+          {/* Video Badge Overlay - Only shown if vehicle has video */}
           {vehicle.videoSrc && (
-            <button
-              onClick={handleVideoClick}
-              className="absolute bottom-2 right-2 bg-black/70 hover:bg-black/90 text-white p-2 rounded-lg transition-all shadow-lg hover:shadow-xl"
-              aria-label={`Play video for ${vehicle.name}`}
-            >
-              <Video size={20} />
-            </button>
+            <>
+              {/* Semi-transparent overlay on hover to darken image */}
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 pointer-events-none" />
+
+              {/* Prominent Video Button */}
+              <button
+                onClick={handleVideoClick}
+                className="absolute top-3 right-3 flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 z-10"
+                aria-label={`Play video for ${vehicle.name}`}
+              >
+                <Video size={18} className="sm:w-5 sm:h-5" />
+                <span className="font-semibold text-xs sm:text-sm whitespace-nowrap">Ver Video</span>
+              </button>
+
+              {/* Additional visual cue: Corner badge for extra visibility */}
+              <div className="absolute top-0 left-0 w-0 h-0 border-l-[40px] sm:border-l-[50px] border-l-secondary/20 border-t-[40px] sm:border-t-[50px] border-t-secondary/20 border-r-[40px] sm:border-r-[50px] border-r-transparent border-b-[40px] sm:border-b-[50px] border-b-transparent pointer-events-none" />
+            </>
           )}
         </div>
         <div className="p-4 flex flex-col gap-3">

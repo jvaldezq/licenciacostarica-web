@@ -3,7 +3,8 @@ import "@/styles/globals.css";
 import { QueryWrapper } from "@/components/QueryWrapper";
 import { VideoModalProvider } from "@/contexts/VideoModalContext";
 import { RootVideoModal } from "@/components/RootVideoModal";
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { Header } from "@/components/Header";
 
 
 export const metadata: Metadata = {
@@ -100,10 +101,11 @@ const RootLayout = ({
 }>) => {
     return (<html lang="en">
         <body
-            className="h-dvh bg-white"
+            className="min-h-screen bg-white"
         >
             <QueryWrapper>
                 <VideoModalProvider>
+                    <Header />
                     {children}
                     <RootVideoModal />
                 </VideoModalProvider>

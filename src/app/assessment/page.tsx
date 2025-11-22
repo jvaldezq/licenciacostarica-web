@@ -116,22 +116,22 @@ export default function AssessmentPage() {
     if (state.error && state.view === 'selection') {
         return (
             <div className="container mx-auto px-4 py-8">
-                <Card className="border-red-200 bg-red-50 max-w-2xl mx-auto">
+                <Card className="border-error bg-error/10 max-w-2xl mx-auto">
                     <CardHeader>
-                        <CardTitle className="text-red-900 flex items-center gap-2">
+                        <CardTitle className="text-error flex items-center gap-2">
                             <AlertCircle className="h-5 w-5" />
                             Error
                         </CardTitle>
-                        <CardDescription className="text-red-700">
+                        <CardDescription className="text-primary">
                             {state.error}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="flex gap-3">
-                            <Button onClick={handleRetry} variant="destructive">
+                            <Button onClick={handleRetry} className="bg-secondary hover:bg-secondary/90 text-white">
                                 Reintentar
                             </Button>
-                            <Button onClick={() => setState(prev => ({ ...prev, error: null }))} variant="outline">
+                            <Button onClick={() => setState(prev => ({ ...prev, error: null }))} variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
                                 Volver
                             </Button>
                         </div>
@@ -147,8 +147,8 @@ export default function AssessmentPage() {
             <div className="container mx-auto px-4 py-8">
                 <Card className="max-w-2xl mx-auto">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-3">
-                            <Loader2 className="h-6 w-6 animate-spin text-slate-900" />
+                        <CardTitle className="flex items-center gap-3 text-primary">
+                            <Loader2 className="h-6 w-6 animate-spin text-secondary" />
                             Generando tu Evaluación
                         </CardTitle>
                         <CardDescription>
@@ -157,10 +157,10 @@ export default function AssessmentPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-3">
-                            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-slate-900 animate-pulse" style={{ width: '60%' }} />
+                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-secondary animate-pulse" style={{ width: '60%' }} />
                             </div>
-                            <p className="text-sm text-slate-600 text-center">
+                            <p className="text-sm text-gray-600 text-center">
                                 Esto solo tomará unos segundos
                             </p>
                         </div>
@@ -176,8 +176,8 @@ export default function AssessmentPage() {
             <div className="container mx-auto px-4 py-8">
                 <Card className="max-w-2xl mx-auto">
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-3">
-                            <Loader2 className="h-6 w-6 animate-spin text-slate-900" />
+                        <CardTitle className="flex items-center gap-3 text-primary">
+                            <Loader2 className="h-6 w-6 animate-spin text-secondary" />
                             Calificando tu Examen
                         </CardTitle>
                         <CardDescription>
@@ -186,10 +186,10 @@ export default function AssessmentPage() {
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-3">
-                            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-slate-900 animate-pulse" style={{ width: '80%' }} />
+                            <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div className="h-full bg-secondary animate-pulse" style={{ width: '80%' }} />
                             </div>
-                            <p className="text-sm text-slate-600 text-center">
+                            <p className="text-sm text-gray-600 text-center">
                                 Casi listo...
                             </p>
                         </div>
@@ -210,16 +210,16 @@ export default function AssessmentPage() {
             <>
                 {state.error && (
                     <div className="container mx-auto px-4 pt-8 max-w-4xl">
-                        <Alert variant="destructive" className="mb-4">
-                            <AlertCircle className="h-4 w-4" />
-                            <AlertTitle>Error al Enviar</AlertTitle>
-                            <AlertDescription>
+                        <Alert variant="destructive" className="mb-4 border-error bg-error/10">
+                            <AlertCircle className="h-4 w-4 text-error" />
+                            <AlertTitle className="text-error">Error al Enviar</AlertTitle>
+                            <AlertDescription className="text-primary">
                                 {state.error}
                                 <Button
                                     variant="outline"
                                     size="sm"
                                     onClick={() => setState(prev => ({ ...prev, error: null }))}
-                                    className="ml-4"
+                                    className="ml-4 border-error text-error hover:bg-error hover:text-white"
                                 >
                                     Cerrar
                                 </Button>

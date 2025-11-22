@@ -246,12 +246,15 @@ export interface GenerateAssessmentResponse {
     };
     questions: Array<{
         id: string;
-        questionText: string;
+        text: string; // Rich text JSON from API
+        questionText: string; // Legacy field, keeping for backwards compatibility
         chapterId: string;
         chapterTitle: string;
+        order: number;
         answers: Array<{
             id: string;
-            answerText: string;
+            text: string;
+            order: number;
         }>;
     }>;
     totalQuestions: number;
@@ -272,19 +275,24 @@ export interface QuestionResult {
     questionText: string;
     chapterId: string;
     chapterTitle: string;
-    userAnswerId: string;
+    selectedAnswerId: string; // API uses selectedAnswerId
+    userAnswerId?: string; // Legacy field for backwards compatibility
     correctAnswerId: string;
     isCorrect: boolean;
-    userAnswerText: string;
+    selectedAnswerText: string; // API uses selectedAnswerText
+    userAnswerText?: string; // Legacy field for backwards compatibility
     correctAnswerText: string;
+    order: number;
 }
 
 export interface WeakChapter {
     chapterId: string;
     chapterTitle: string;
     incorrectCount: number;
-    totalCount: number;
-    accuracy: number;
+    totalQuestionsFromChapter: number; // API uses totalQuestionsFromChapter
+    totalCount?: number; // Legacy field for backwards compatibility
+    accuracyPercentage: number; // API uses accuracyPercentage
+    accuracy?: number; // Legacy field for backwards compatibility
 }
 
 export interface GradeAssessmentResponse {
