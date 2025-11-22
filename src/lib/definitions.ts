@@ -190,3 +190,122 @@ export enum CLASS_TYPE {
     CLASS = 1,
     DRIVE_TEST = 2
 }
+
+// Assessment System Types
+export interface IManual {
+    id: string;
+    title: string;
+    description?: string;
+    status: 'draft' | 'published';
+    chapterCount?: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IChapter {
+    id: string;
+    manualId: string;
+    title: string;
+    content: string; // Rich text JSON
+    order: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface IQuestion {
+    id: string;
+    chapterId: string;
+    questionText: string; // Rich text JSON
+    order: number;
+    createdAt: Date;
+    updatedAt: Date;
+    answers: IAnswer[];
+    chapter?: IChapter;
+}
+
+export interface IAnswer {
+    id: string;
+    questionId: string;
+    answerText: string;
+    isCorrect: boolean;
+    order: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface GenerateAssessmentRequest {
+    manualId: string;
+    questionCount: number;
+}
+
+export interface GenerateAssessmentResponse {
+    assessmentId: string;
+    manual: {
+        id: string;
+        title: string;
+    };
+    questions: Array<{
+        id: string;
+        questionText: string;
+        chapterId: string;
+        chapterTitle: string;
+        answers: Array<{
+            id: string;
+            answerText: string;
+        }>;
+    }>;
+    totalQuestions: number;
+    generatedAt: string;
+}
+
+export interface GradeAssessmentRequest {
+    assessmentId: string;
+    manualId: string;
+    answers: Array<{
+        questionId: string;
+        answerId: string;
+    }>;
+}
+
+export interface QuestionResult {
+    questionId: string;
+    questionText: string;
+    chapterId: string;
+    chapterTitle: string;
+    userAnswerId: string;
+    correctAnswerId: string;
+    isCorrect: boolean;
+    userAnswerText: string;
+    correctAnswerText: string;
+}
+
+export interface WeakChapter {
+    chapterId: string;
+    chapterTitle: string;
+    incorrectCount: number;
+    totalCount: number;
+    accuracy: number;
+}
+
+export interface GradeAssessmentResponse {
+    assessmentId: string;
+    manual: {
+        id: string;
+        title: string;
+    };
+    score: {
+        correct: number;
+        incorrect: number;
+        total: number;
+        percentage: number;
+        passed: boolean;
+        grade: string;
+    };
+    results: QuestionResult[];
+    studyRecommendations: {
+        shouldReview: boolean;
+        weakChapters: WeakChapter[];
+        summary: string;
+    };
+    gradedAt: string;
+}
