@@ -15,7 +15,7 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import { RichTextDisplay } from './RichTextDisplay';
-import { ChevronLeft, ChevronRight, AlertCircle, X } from 'lucide-react';
+import { ChevronRight, AlertCircle, X } from 'lucide-react';
 
 interface TestTakingViewProps {
     assessment: GenerateAssessmentResponse;
@@ -31,7 +31,6 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
 
     const currentQuestion = assessment.questions[currentQuestionIndex];
     const isLastQuestion = currentQuestionIndex === assessment.questions.length - 1;
-    const isFirstQuestion = currentQuestionIndex === 0;
     const answeredCount = Object.keys(answers).length;
     const progressPercentage = (answeredCount / assessment.totalQuestions) * 100;
 
@@ -50,11 +49,6 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
         }
     };
 
-    const handlePrevious = () => {
-        if (!isFirstQuestion) {
-            setCurrentQuestionIndex((prev) => prev - 1);
-        }
-    };
 
     const handleSubmit = () => {
         setShowSubmitDialog(false);
@@ -100,7 +94,7 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
                         <span>Progreso</span>
                         <span className="text-right">{answeredCount}/{assessment.totalQuestions}</span>
                     </div>
-                    <Progress value={progressPercentage} className="h-2 bg-gray-200 [&>div]:bg-success" />
+                    <Progress value={progressPercentage} className="h-2 bg-gray-200 [&>div]:bg-secondary" />
                 </div>
             </div>
 
@@ -158,17 +152,7 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
                     </div>
                 </CardContent>
 
-                <CardFooter className="flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 p-4 sm:p-6">
-                    <Button
-                        variant="outline"
-                        onClick={handlePrevious}
-                        disabled={isFirstQuestion}
-                        className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white disabled:opacity-50 text-sm sm:text-base"
-                    >
-                        <ChevronLeft className="h-4 w-4 mr-2" />
-                        Anterior
-                    </Button>
-
+                <CardFooter className="flex justify-end p-4 sm:p-6">
                     <Button
                         onClick={handleNext}
                         disabled={!answers[currentQuestion.id]}
@@ -180,37 +164,6 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
                 </CardFooter>
             </Card>
 
-            {/* Question Grid Overview */}
-            <Card>
-                <CardHeader className="p-4 sm:p-6">
-                    <CardTitle className="text-sm sm:text-base text-primary">Resumen de Respuestas</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 sm:p-6">
-                    <div className="grid grid-cols-5 xs:grid-cols-6 sm:grid-cols-8 md:grid-cols-10 gap-1.5 sm:gap-2">
-                        {assessment.questions.map((question, index) => {
-                            const isAnswered = !!answers[question.id];
-                            const isCurrent = index === currentQuestionIndex;
-                            return (
-                                <button
-                                    key={question.id}
-                                    onClick={() => setCurrentQuestionIndex(index)}
-                                    className={`
-                                        aspect-square rounded-md text-xs sm:text-sm font-medium transition-all active:scale-95
-                                        ${isCurrent
-                                            ? 'bg-secondary text-white ring-1 sm:ring-2 ring-secondary ring-offset-1 sm:ring-offset-2'
-                                            : isAnswered
-                                                ? 'bg-success/20 text-success hover:bg-success/30 border border-success'
-                                                : 'bg-white border-2 border-gray-200 text-gray-400 hover:border-gray-300'
-                                        }
-                                    `}
-                                >
-                                    {index + 1}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </CardContent>
-            </Card>
 
             {/* Submit Confirmation Dialog */}
             <Dialog open={showSubmitDialog} onOpenChange={setShowSubmitDialog}>
@@ -229,7 +182,7 @@ export function TestTakingView({ assessment, onSubmit, onExit }: TestTakingViewP
                     </DialogHeader>
                     <DialogFooter className="flex-col sm:flex-row gap-2 sm:gap-0">
                         <Button variant="outline" onClick={() => setShowSubmitDialog(false)} className="w-full sm:w-auto border-primary text-primary hover:bg-primary hover:text-white">
-                            Revisar Respuestas
+                            Cancelar
                         </Button>
                         <Button onClick={handleSubmit} className="w-full sm:w-auto bg-secondary hover:bg-secondary/90 text-white">
                             Enviar Examen

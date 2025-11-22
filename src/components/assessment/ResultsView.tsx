@@ -67,7 +67,7 @@ export function ResultsView({ results, onTakeNewAssessment }: ResultsViewProps) 
                             )}
                         </div>
                         <CardTitle className={`text-4xl font-bold mb-2 ${getGradeColor(results.score.passed)}`}>
-                            {results.score.percentage.toFixed(1)}%
+                            {results.score.percentage.toFixed(1)}
                         </CardTitle>
                         <CardDescription className="text-lg font-semibold text-primary">
                             {results.score.correct} de {results.score.total} correctas
@@ -75,7 +75,7 @@ export function ResultsView({ results, onTakeNewAssessment }: ResultsViewProps) 
                         <Badge
                             className={`mt-3 text-base px-4 py-1 ${results.score.passed ? 'bg-success text-white hover:bg-success/90' : 'bg-error text-white hover:bg-error/90'}`}
                         >
-                            {results.score.passed ? '¡Aprobado!' : 'No Aprobado'} - Calificación: {results.score.grade}
+                            {results.score.passed ? '¡Aprobado!' : 'No Aprobado'}
                         </Badge>
                     </div>
                 </CardHeader>
